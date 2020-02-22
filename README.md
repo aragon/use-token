@@ -2,7 +2,7 @@
 
 [<img src="https://img.shields.io/npm/v/use-token" alt="" />](https://www.npmjs.com/package/use-token) [<img src="https://img.shields.io/bundlephobia/minzip/use-token" alt="" />](https://bundlephobia.com/result?p=use-token)
 
-useWallet() allows to get information related to a token on Ethereum (for now, other networks will follow).
+useToken() allows to get information related to a token on Ethereum (for now; other networks will follow).
 
 ## Usage
 

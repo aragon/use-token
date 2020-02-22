@@ -1,0 +1,9 @@
+{
+  "jsc": {
+    "parser": {
+      "classProperty": true,
+      "jsx": true,
+      "syntax": "ecmascript"
+    }
+  }
+}

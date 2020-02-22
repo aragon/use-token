@@ -1,0 +1,29 @@
+{
+  "name": "use-token",
+  "version": "0.1.0",
+  "author": "Aragon Association <legal@aragon.org>",
+  "license": "AGPL-3.0",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "sideEffects": false,
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "build": "yarn swc src -d dist",
+    "dev": "yarn swc -w src -d dist",
+    "prepublishOnly": "git push && git push --tags"
+  },
+  "dependencies": {
+    "js-sha3": "^0.8.0"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.23",
+    "@swc/core": "^1.1.27",
+    "chokidar": "^3.3.1",
+    "prettier": "^1.19.1"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0"
+  }
+}

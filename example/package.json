@@ -1,17 +1,21 @@
 {
   "scripts": {
-    "start": "parcel serve index.html",
-    "build": "parcel build index.html"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "use-token": "link:.."
+    "use-token": "portal:.."
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/preset-react": "^7.8.3",
-    "parcel": "^1.12.4"
+    "@swc/core": "^1.1.28",
+    "browserslist": "^4.8.7",
+    "copy-webpack-plugin": "^5.1.1",
+    "swc-loader": "^0.1.8",
+    "web-webpack-plugin": "^4.6.7",
+    "webpack": "^5.0.0-beta.13",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }

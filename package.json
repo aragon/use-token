@@ -8,13 +8,13 @@
     "url": "https://github.com/aragon/use-token.git"
   },
   "homepage": "https://github.com/aragon/use-token#readme",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/use-token.js",
+  "module": "dist/use-token.js",
   "sideEffects": false,
   "files": ["index.js"],
   "scripts": {
-    "build": "yarn swc src -d dist",
-    "dev": "yarn swc -w src -d dist",
+    "build": "webpack --mode=production",
+    "dev": "webpack --watch",
     "prepublishOnly": "git push && git push --tags"
   },
   "dependencies": {
@@ -23,8 +23,12 @@
   "devDependencies": {
     "@swc/cli": "^0.1.23",
     "@swc/core": "^1.1.27",
+    "browserslist": "^4.8.7",
     "chokidar": "^3.3.1",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "swc-loader": "^0.1.8",
+    "webpack": "^5.0.0-beta.13",
+    "webpack-cli": "^3.3.11"
   },
   "peerDependencies": {
     "react": "^16.12.0"

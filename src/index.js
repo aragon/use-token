@@ -56,9 +56,7 @@ export function UseTokenProvider({ children }) {
       const tokenData = await fetchTokenData(address)
       tokens.current.set(address, tokenData)
       return tokenData
-    } catch (err) {
-      console.log('ar', err)
-    }
+    } catch (err) {}
   }, [])
 
   return (

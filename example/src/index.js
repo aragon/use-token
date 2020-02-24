@@ -1,7 +1,10 @@
-import 'babel-polyfill'
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { useToken, UseTokenProvider } from 'use-token'
+// import { useToken, UseTokenProvider } from 'use-token'
+import * as ut from 'use-token'
+
+const { useToken, UseTokenProvider } = ut
+console.log('???', ut)
 
 const TOKENS = [
   '0x0000000000000000000000000000000000000000',

@@ -41,7 +41,7 @@ export default () => (
 
 ## API
 
-### <UseTokenProvider />
+### &lt;UseTokenProvider />
 
 This is the provider component. It should be placed above any component using useToken().
 

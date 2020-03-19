@@ -9,6 +9,7 @@ import { fetchTokenData, tokenIconUrl } from './utils'
 
 const UseTokenContext = React.createContext(null)
 
+
 export function useToken(address = '') {
   const tokenContext = useContext(UseTokenContext)
   const [tokenData, setTokenData] = useState(null)

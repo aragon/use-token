@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "sideEffects": false,
-  "files": ["dist/*"],
+  "files": ["dist/**/*"],
   "scripts": {
     "build": "yarn swc src -d dist",
     "dev": "yarn swc -w src -d dist",

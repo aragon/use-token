@@ -26,7 +26,7 @@ function App() {
           gridGap: '30px',
         }}
       >
-        {TOKENS.map(address => (
+        {TOKENS.map((address) => (
           <TokenCard key={address} address={address} />
         ))}
       </div>
@@ -113,5 +113,5 @@ ReactDOM.render(
   <UseTokenProvider>
     <App />
   </UseTokenProvider>,
-  document.querySelector('#app')
+  document.getElementById('root')
 )

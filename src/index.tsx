@@ -24,6 +24,7 @@ export function useToken(address = '') {
     let cancelled = false
 
     const update = async () => {
+      // @ts-ignore
       const data = await tokenContext.fetchTokenData(address)
 
       if (!cancelled) {
@@ -35,19 +36,21 @@ export function useToken(address = '') {
     return () => {
       cancelled = true
     }
-  }, [address])
+  }, [address, tokenContext])
 
   return {
     iconUrl: tokenIconUrl(address),
+    // @ts-ignore
     symbol: tokenData && tokenData.symbol,
+    // @ts-ignore
     name: tokenData && tokenData.name,
   }
 }
-
+// @ts-ignore
 export function UseTokenProvider({ children }) {
   const tokens = useRef(new Map())
 
-  const fetchAndCacheTokenData = useCallback(async address => {
+  const fetchAndCacheTokenData = useCallback(async (address) => {
     if (tokens.current.has(address)) {
       return tokens.current.get(address)
     }
@@ -63,6 +66,7 @@ export function UseTokenProvider({ children }) {
 
   return (
     <UseTokenContext.Provider
+      // @ts-ignore
       value={{ fetchTokenData: fetchAndCacheTokenData }}
     >
       {children}

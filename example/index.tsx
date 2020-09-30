@@ -41,7 +41,7 @@ function App() {
   )
 }
 
-function TokenCard({ address }) {
+function TokenCard({ address }: { address: string }) {
   const { iconUrl, symbol, name } = useToken(address)
   return (
     <div

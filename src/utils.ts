@@ -16,7 +16,7 @@ function tokenDataUrl(address: string) {
   return `https://raw.githubusercontent.com/ethereum-lists/tokens/master/tokens/eth/${address}.json`
 }
 
-export async function fetchTokenData(address: string): Promise<Token> {
+export async function fetchTokenData(address: string) {
   if (address === EMPTY_ADDRESS) {
     return ETHEREUM_DATA
   }
@@ -32,7 +32,7 @@ export async function fetchTokenData(address: string): Promise<Token> {
     if (!response.ok) {
       throw new Error('Wrong HTTP status')
     }
-    return response.json()
+    return response.json() as Promise<Token>
   } catch (err) {
     throw err
   }

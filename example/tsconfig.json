@@ -5,7 +5,7 @@
     "module": "commonjs",
     "jsx": "react",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "removeComments": true,

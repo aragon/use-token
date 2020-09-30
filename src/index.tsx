@@ -103,7 +103,7 @@ export function useToken(address = '') {
       }
     }
 
-    update()
+    void update()
 
     return () => {
       cancelled = true

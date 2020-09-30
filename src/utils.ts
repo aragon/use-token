@@ -1,29 +1,22 @@
 import { keccak_256 as keccak256 } from 'js-sha3'
+import { Token } from './types'
 
-const ADDRESS_REGEX = /^0x[0-9a-fA-F]{40}$/
 const EMPTY_ADDRESS = '0x0000000000000000000000000000000000000000'
 const TRUST_WALLET_BASE_URL =
   'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum'
-const ETHEREUM_LISTS_BASE_URL =
-  'https://raw.githubusercontent.com/ethereum-lists/tokens/master/tokens/eth'
 
-const ETHEREUM_DATA = {
+const ETHEREUM_DATA: Token = {
   name: 'Ethereum',
   symbol: 'ETH',
+  address: '',
+  decimals: 18,
 }
 
-function iconUrl(address) {
-  if (address === EMPTY_ADDRESS) {
-    return `${TRUST_WALLET_BASE_URL}/info/logo.png`
-  }
-  return `${TRUST_WALLET_BASE_URL}/assets/${address}/logo.png`
-}
-
-function tokenDataUrl(address) {
+function tokenDataUrl(address: string) {
   return `https://raw.githubusercontent.com/ethereum-lists/tokens/master/tokens/eth/${address}.json`
 }
 
-export async function fetchTokenData(address) {
+export async function fetchTokenData(address: string): Promise<Token> {
   if (address === EMPTY_ADDRESS) {
     return ETHEREUM_DATA
   }
@@ -77,7 +70,7 @@ export function tokenIconUrl(address = '') {
  * @param {String} address the given HEX address
  * @return {String}
  */
-function toChecksumAddress(address) {
+function toChecksumAddress(address: string) {
   if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
     throw new Error(
       'Given address "' + address + '" is not a valid Ethereum address.'

@@ -1,17 +1,65 @@
 import React, {
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from 'react'
+import { Token } from './types'
 import { fetchTokenData, tokenIconUrl } from './utils'
 
-const UseTokenContext = React.createContext(null)
+type ProviderProps = {
+  children: ReactNode
+}
+
+type TokensContext = {
+  cachedTokens: Map<string, Token>
+  setCachedToken: (address: string, tokenData: Token) => void
+  getCachedToken: (address: string) => Token | null
+  tokenCached: (address: string) => boolean
+}
+
+const UseTokenContext = React.createContext<TokensContext | null>(null)
+
+export function UseTokenProvider({ children }: ProviderProps) {
+  const cachedTokens = useRef<TokensContext['cachedTokens']>(new Map())
+
+  const setCachedToken = useCallback<TokensContext['setCachedToken']>(
+    (address, tokenData) => {
+      cachedTokens.current.set(address, tokenData)
+    },
+    []
+  )
+
+  const getCachedToken = useCallback<TokensContext['getCachedToken']>(
+    (address) => {
+      return cachedTokens.current.get(address) || null
+    },
+    []
+  )
+
+  const tokenCached = useCallback<TokensContext['tokenCached']>((address) => {
+    return cachedTokens.current.has(address)
+  }, [])
+
+  return (
+    <UseTokenContext.Provider
+      value={{
+        cachedTokens: cachedTokens.current,
+        setCachedToken,
+        getCachedToken,
+        tokenCached,
+      }}
+    >
+      {children}
+    </UseTokenContext.Provider>
+  )
+}
 
 export function useToken(address = '') {
   const tokenContext = useContext(UseTokenContext)
-  const [tokenData, setTokenData] = useState(null)
+  const [tokenData, setTokenData] = useState<Token | null>(null)
 
   if (tokenContext === null) {
     throw new Error(
@@ -20,56 +68,51 @@ export function useToken(address = '') {
     )
   }
 
+  const { getCachedToken, setCachedToken, tokenCached } = tokenContext
+
+  const fetchAndCacheTokenData = useCallback(
+    async (address: string) => {
+      // Grab from cache if previously requested
+      if (tokenCached(address)) {
+        return getCachedToken(address)
+      }
+
+      try {
+        const tokenData = await fetchTokenData(address)
+
+        // Cache token to prevent repeat requests in other calls
+        setCachedToken(address, tokenData)
+
+        return tokenData
+      } catch (err) {
+        console.error(err)
+        return null
+      }
+    },
+    [getCachedToken, setCachedToken, tokenCached]
+  )
+
   useEffect(() => {
     let cancelled = false
 
     const update = async () => {
-      // @ts-ignore
-      const data = await tokenContext.fetchTokenData(address)
+      const data = await fetchAndCacheTokenData(address)
 
       if (!cancelled) {
         setTokenData(data)
       }
     }
+
     update()
 
     return () => {
       cancelled = true
     }
-  }, [address, tokenContext])
+  }, [address, fetchAndCacheTokenData])
 
   return {
     iconUrl: tokenIconUrl(address),
-    // @ts-ignore
     symbol: tokenData && tokenData.symbol,
-    // @ts-ignore
     name: tokenData && tokenData.name,
   }
-}
-// @ts-ignore
-export function UseTokenProvider({ children }) {
-  const tokens = useRef(new Map())
-
-  const fetchAndCacheTokenData = useCallback(async (address) => {
-    if (tokens.current.has(address)) {
-      return tokens.current.get(address)
-    }
-
-    try {
-      const tokenData = await fetchTokenData(address)
-      tokens.current.set(address, tokenData)
-      return tokenData
-    } catch (err) {
-      console.log('ar', err)
-    }
-  }, [])
-
-  return (
-    <UseTokenContext.Provider
-      // @ts-ignore
-      value={{ fetchTokenData: fetchAndCacheTokenData }}
-    >
-      {children}
-    </UseTokenContext.Provider>
-  )
 }

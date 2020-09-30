@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useToken, UseTokenProvider } from 'use-token'
@@ -15,10 +14,17 @@ const TOKENS = [
 ]
 
 function App() {
+  const [listMounted, setListMounted] = useState(true)
   return (
     <div>
       <Styles />
       <h1>useToken()</h1>
+      <button
+        style={{ marginBottom: '20px' }}
+        onClick={() => setListMounted(!listMounted)}
+      >
+        {listMounted ? 'Unmount' : 'Mount'} list
+      </button>
       <div
         style={{
           display: 'grid',
@@ -26,9 +32,10 @@ function App() {
           gridGap: '30px',
         }}
       >
-        {TOKENS.map((address) => (
-          <TokenCard key={address} address={address} />
-        ))}
+        {listMounted &&
+          TOKENS.map((address) => (
+            <TokenCard key={address} address={address} />
+          ))}
       </div>
     </div>
   )

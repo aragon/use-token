@@ -16,7 +16,7 @@ function tokenDataUrl(address: string) {
   return `https://raw.githubusercontent.com/ethereum-lists/tokens/master/tokens/eth/${address}.json`
 }
 
-export async function fetchTokenData(address: string) {
+export async function fetchTokenData(address: string): Promise<Token> {
   if (address === EMPTY_ADDRESS) {
     return ETHEREUM_DATA
   }
@@ -27,15 +27,13 @@ export async function fetchTokenData(address: string) {
     throw new Error(`Invalid address: ${address}`)
   }
 
-  try {
-    const response = await fetch(tokenDataUrl(address))
-    if (!response.ok) {
-      throw new Error('Wrong HTTP status')
-    }
-    return response.json() as Promise<Token>
-  } catch (err) {
-    throw err
+  const response = await fetch(tokenDataUrl(address))
+
+  if (!response.ok) {
+    throw new Error('Wrong HTTP status')
   }
+
+  return response.json() as Promise<Token>
 }
 
 /**
@@ -44,7 +42,7 @@ export async function fetchTokenData(address: string) {
  * @param {string} address The contract address of the token, or the zero address (0x000…) to get the Ethereum icon.
  * @return {string|null} The generated URL, or null if the address is invalid.
  */
-export function tokenIconUrl(address = '') {
+export function tokenIconUrl(address = ''): string | null {
   try {
     address = toChecksumAddress(address.trim())
   } catch (err) {

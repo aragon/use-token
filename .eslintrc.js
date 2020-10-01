@@ -1,11 +1,13 @@
 module.exports = {
   extends: [
-    'react-app',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'react-app',
   ],
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
     jsx: true,
     project: './tsconfig.json',
@@ -14,5 +16,8 @@ module.exports = {
     react: {
       version: '999.999.999',
     },
+  },
+  rules: {
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 }

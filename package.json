@@ -17,7 +17,7 @@
     "start": "tsdx watch --transpileOnly",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint src",
+    "lint": "tsdx lint src --max-warnings 0 && tsc",
     "prepare": "tsdx build",
     "prepublishOnly": "git push && git push --tags",
     "size": "size-limit",

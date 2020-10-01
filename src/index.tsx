@@ -22,7 +22,7 @@ type TokensContext = {
 
 const UseTokenContext = React.createContext<TokensContext | null>(null)
 
-export function UseTokenProvider({ children }: ProviderProps) {
+export function UseTokenProvider({ children }: ProviderProps): JSX.Element {
   const cachedTokens = useRef<TokensContext['cachedTokens']>(new Map())
 
   const setCachedToken = useCallback<TokensContext['setCachedToken']>(
@@ -57,7 +57,13 @@ export function UseTokenProvider({ children }: ProviderProps) {
   )
 }
 
-export function useToken(address = '') {
+export function useToken(
+  address = ''
+): {
+  iconUrl: string | null
+  symbol: string | null
+  name: string | null
+} {
   const tokenContext = useContext(UseTokenContext)
   const [tokenData, setTokenData] = useState<Token | null>(null)
 

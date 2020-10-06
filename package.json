@@ -3,32 +3,60 @@
   "version": "0.2.0",
   "author": "Aragon Association <legal@aragon.org>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/aragon/use-token.git"
-  },
-  "homepage": "https://github.com/aragon/use-token#readme",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/use-token.esm.js",
   "sideEffects": false,
+  "typings": "dist/index.d.ts",
   "files": [
-    "dist/**/*"
+    "dist"
   ],
-  "scripts": {
-    "build": "yarn swc src -d dist",
-    "dev": "yarn swc -w src -d dist",
-    "prepublishOnly": "git push && git push --tags"
+  "engines": {
+    "node": ">=10"
   },
+  "scripts": {
+    "start": "tsdx watch --transpileOnly",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint src --max-warnings 0 && tsc",
+    "prepare": "tsdx build",
+    "prepublishOnly": "git push && git push --tags",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
+  "size-limit": [
+    {
+      "path": "dist/use-token.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/use-token.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "dependencies": {
     "js-sha3": "^0.8.0"
   },
   "devDependencies": {
-    "@swc/cli": "^0.1.23",
-    "@swc/core": "^1.1.27",
-    "chokidar": "^3.3.1",
-    "prettier": "^1.19.1"
+    "@size-limit/preset-small-lib": "^4.6.0",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "size-limit": "^4.6.0",
+    "tsdx": "^0.14.0",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.3"
   },
   "peerDependencies": {
-    "react": "^16.12.0"
+    "react": "^16.13.0"
   }
 }
